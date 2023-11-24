@@ -1,26 +1,10 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = formatRelative;
-
-var _index = _interopRequireDefault(require("../differenceInCalendarDays/index.js"));
-
-var _index2 = _interopRequireDefault(require("../format/index.js"));
-
-var _index3 = _interopRequireDefault(require("../locale/en-US/index.js"));
-
-var _index4 = _interopRequireDefault(require("../subMilliseconds/index.js"));
-
-var _index5 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index6 = _interopRequireDefault(require("../_lib/getTimezoneOffsetInMilliseconds/index.js"));
-
-var _index7 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import differenceInCalendarDays from '../differenceInCalendarDays/index.js';
+import format from '../format/index.js';
+import defaultLocale from '../locale/en-US/index.js';
+import subMilliseconds from '../subMilliseconds/index.js';
+import toDate from '../toDate/index.js';
+import getTimezoneOffsetInMilliseconds from '../_lib/getTimezoneOffsetInMilliseconds/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name formatRelative
  * @category Common Helpers
@@ -56,12 +40,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @throws {RangeError} `options.locale` must contain `formatLong` property
  * @throws {RangeError} `options.locale` must contain `formatRelative` property
  */
-function formatRelative(dirtyDate, dirtyBaseDate, dirtyOptions) {
-  (0, _index7.default)(2, arguments);
-  var date = (0, _index5.default)(dirtyDate);
-  var baseDate = (0, _index5.default)(dirtyBaseDate);
+
+export default function formatRelative(dirtyDate, dirtyBaseDate, dirtyOptions) {
+  requiredArgs(2, arguments);
+  var date = toDate(dirtyDate);
+  var baseDate = toDate(dirtyBaseDate);
   var options = dirtyOptions || {};
-  var locale = options.locale || _index3.default;
+  var locale = options.locale || defaultLocale;
 
   if (!locale.localize) {
     throw new RangeError('locale must contain localize property');
@@ -75,7 +60,7 @@ function formatRelative(dirtyDate, dirtyBaseDate, dirtyOptions) {
     throw new RangeError('locale must contain formatRelative property');
   }
 
-  var diff = (0, _index.default)(date, baseDate);
+  var diff = differenceInCalendarDays(date, baseDate);
 
   if (isNaN(diff)) {
     throw new RangeError('Invalid time value');
@@ -99,10 +84,8 @@ function formatRelative(dirtyDate, dirtyBaseDate, dirtyOptions) {
     token = 'other';
   }
 
-  var utcDate = (0, _index4.default)(date, (0, _index6.default)(date));
-  var utcBaseDate = (0, _index4.default)(baseDate, (0, _index6.default)(baseDate));
+  var utcDate = subMilliseconds(date, getTimezoneOffsetInMilliseconds(date));
+  var utcBaseDate = subMilliseconds(baseDate, getTimezoneOffsetInMilliseconds(baseDate));
   var formatStr = locale.formatRelative(token, utcDate, utcBaseDate, options);
-  return (0, _index2.default)(date, formatStr, options);
+  return format(date, formatStr, options);
 }
-
-module.exports = exports.default;
