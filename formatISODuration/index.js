@@ -1,14 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = formatISODuration;
-
-var _index = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name formatISODuration
  * @category Common Helpers
@@ -35,8 +25,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * })
  * //=> 'P39Y2M20DT0H0M0S'
  */
-function formatISODuration(duration) {
-  (0, _index.default)(1, arguments);
+
+export default function formatISODuration(duration) {
+  requiredArgs(1, arguments);
   if (typeof duration !== 'object') throw new Error('Duration must be an object');
   var _duration$years = duration.years,
       years = _duration$years === void 0 ? 0 : _duration$years,
@@ -52,5 +43,3 @@ function formatISODuration(duration) {
       seconds = _duration$seconds === void 0 ? 0 : _duration$seconds;
   return "P".concat(years, "Y").concat(months, "M").concat(days, "DT").concat(hours, "H").concat(minutes, "M").concat(seconds, "S");
 }
-
-module.exports = exports.default;

@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = endOfDecade;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name endOfDecade
  * @category Decade Helpers
@@ -35,14 +24,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * var result = endOfDecade(new Date(1984, 4, 12, 00, 00, 00))
  * //=> Dec 31 1989 23:59:59.999
  */
-function endOfDecade(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
+
+export default function endOfDecade(dirtyDate) {
+  requiredArgs(1, arguments);
+  var date = toDate(dirtyDate);
   var year = date.getFullYear();
   var decade = 9 + Math.floor(year / 10) * 10;
   date.setFullYear(decade, 11, 31);
   date.setHours(23, 59, 59, 999);
   return date;
 }
-
-module.exports = exports.default;

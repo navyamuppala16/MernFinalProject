@@ -1,14 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = formatDuration;
-
-var _index = _interopRequireDefault(require("../locale/en-US/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import defaultLocale from '../locale/en-US/index.js';
 var defaultFormat = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
 /**
  * @name formatDuration
@@ -74,7 +64,7 @@ var defaultFormat = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'se
  * //=> '2 years, 9 months, 3 weeks'
  */
 
-function formatDuration(duration) {
+export default function formatDuration(duration) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   if (arguments.length < 1) {
@@ -82,7 +72,7 @@ function formatDuration(duration) {
   }
 
   var format = options.format || defaultFormat;
-  var locale = options.locale || _index.default;
+  var locale = options.locale || defaultLocale;
   var zero = options.zero || false;
   var delimiter = options.delimiter || ' ';
   var result = format.reduce(function (acc, unit) {
@@ -94,5 +84,3 @@ function formatDuration(duration) {
   }, []).join(delimiter);
   return result;
 }
-
-module.exports = exports.default;

@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = endOfHour;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name endOfHour
  * @category Hour Helpers
@@ -33,11 +22,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * var result = endOfHour(new Date(2014, 8, 2, 11, 55))
  * //=> Tue Sep 02 2014 11:59:59.999
  */
-function endOfHour(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
+
+export default function endOfHour(dirtyDate) {
+  requiredArgs(1, arguments);
+  var date = toDate(dirtyDate);
   date.setMinutes(59, 59, 999);
   return date;
 }
-
-module.exports = exports.default;

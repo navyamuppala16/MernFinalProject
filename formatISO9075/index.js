@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = formatISO9075;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../isValid/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/addLeadingZeros/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toDate from '../toDate/index.js';
+import isValid from '../isValid/index.js';
+import addLeadingZeros from '../_lib/addLeadingZeros/index.js';
 /**
  * @name formatISO9075
  * @category Common Helpers
@@ -51,14 +39,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * const result = formatISO9075(new Date(2019, 8, 18, 19, 0, 52), { representation: 'time' })
  * //=> '19:00:52'
  */
-function formatISO9075(dirtyDate, dirtyOptions) {
+
+export default function formatISO9075(dirtyDate, dirtyOptions) {
   if (arguments.length < 1) {
     throw new TypeError("1 argument required, but only ".concat(arguments.length, " present"));
   }
 
-  var originalDate = (0, _index.default)(dirtyDate);
+  var originalDate = toDate(dirtyDate);
 
-  if (!(0, _index2.default)(originalDate)) {
+  if (!isValid(originalDate)) {
     throw new RangeError('Invalid time value');
   }
 
@@ -79,18 +68,18 @@ function formatISO9075(dirtyDate, dirtyOptions) {
   var timeDelimiter = format === 'extended' ? ':' : ''; // Representation is either 'date' or 'complete'
 
   if (representation !== 'time') {
-    var day = (0, _index3.default)(originalDate.getDate(), 2);
-    var month = (0, _index3.default)(originalDate.getMonth() + 1, 2);
-    var year = (0, _index3.default)(originalDate.getFullYear(), 4); // yyyyMMdd or yyyy-MM-dd.
+    var day = addLeadingZeros(originalDate.getDate(), 2);
+    var month = addLeadingZeros(originalDate.getMonth() + 1, 2);
+    var year = addLeadingZeros(originalDate.getFullYear(), 4); // yyyyMMdd or yyyy-MM-dd.
 
     result = "".concat(year).concat(dateDelimiter).concat(month).concat(dateDelimiter).concat(day);
   } // Representation is either 'time' or 'complete'
 
 
   if (representation !== 'date') {
-    var hour = (0, _index3.default)(originalDate.getHours(), 2);
-    var minute = (0, _index3.default)(originalDate.getMinutes(), 2);
-    var second = (0, _index3.default)(originalDate.getSeconds(), 2); // If there's also date, separate it with time with a space
+    var hour = addLeadingZeros(originalDate.getHours(), 2);
+    var minute = addLeadingZeros(originalDate.getMinutes(), 2);
+    var second = addLeadingZeros(originalDate.getSeconds(), 2); // If there's also date, separate it with time with a space
 
     var separator = result === '' ? '' : ' '; // HHmmss or HH:mm:ss.
 
@@ -99,5 +88,3 @@ function formatISO9075(dirtyDate, dirtyOptions) {
 
   return result;
 }
-
-module.exports = exports.default;

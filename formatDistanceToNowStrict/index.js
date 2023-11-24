@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = formatDistanceToNowStrict;
-
-var _index = _interopRequireDefault(require("../formatDistanceStrict/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import distanceInStrictWords from '../formatDistanceStrict/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name formatDistanceToNowStrict
  * @category Common Helpers
@@ -85,9 +74,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> '1 jaro'
  */
-function formatDistanceToNowStrict(dirtyDate, dirtyOptions) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, Date.now(), dirtyOptions);
-}
 
-module.exports = exports.default;
+export default function formatDistanceToNowStrict(dirtyDate, dirtyOptions) {
+  requiredArgs(1, arguments);
+  return distanceInStrictWords(dirtyDate, Date.now(), dirtyOptions);
+}
