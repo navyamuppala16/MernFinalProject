@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInHours;
-
-var _index = _interopRequireDefault(require("../differenceInMilliseconds/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import differenceInMilliseconds from '../differenceInMilliseconds/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 var MILLISECONDS_IN_HOUR = 3600000;
 /**
  * @name differenceInHours
@@ -38,10 +27,8 @@ var MILLISECONDS_IN_HOUR = 3600000;
  * //=> 12
  */
 
-function differenceInHours(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var diff = (0, _index.default)(dirtyDateLeft, dirtyDateRight) / MILLISECONDS_IN_HOUR;
+export default function differenceInHours(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var diff = differenceInMilliseconds(dirtyDateLeft, dirtyDateRight) / MILLISECONDS_IN_HOUR;
   return diff > 0 ? Math.floor(diff) : Math.ceil(diff);
 }
-
-module.exports = exports.default;

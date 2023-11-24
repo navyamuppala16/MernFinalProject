@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInCalendarYears;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name differenceInCalendarYears
  * @category Year Helpers
@@ -36,11 +25,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> 2
  */
-function differenceInCalendarYears(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
+
+export default function differenceInCalendarYears(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
   return dateLeft.getFullYear() - dateRight.getFullYear();
 }
-
-module.exports = exports.default;

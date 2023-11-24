@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = closestTo;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name closestTo
  * @category Common Helpers
@@ -40,9 +29,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * ])
  * //=> Tue Jan 01 2030 00:00:00
  */
-function closestTo(dirtyDateToCompare, dirtyDatesArray) {
-  (0, _index2.default)(2, arguments);
-  var dateToCompare = (0, _index.default)(dirtyDateToCompare);
+
+export default function closestTo(dirtyDateToCompare, dirtyDatesArray) {
+  requiredArgs(2, arguments);
+  var dateToCompare = toDate(dirtyDateToCompare);
 
   if (isNaN(dateToCompare)) {
     return new Date(NaN);
@@ -62,7 +52,7 @@ function closestTo(dirtyDateToCompare, dirtyDatesArray) {
   var result;
   var minDistance;
   datesArray.forEach(function (dirtyDate) {
-    var currentDate = (0, _index.default)(dirtyDate);
+    var currentDate = toDate(dirtyDate);
 
     if (isNaN(currentDate)) {
       result = new Date(NaN);
@@ -79,5 +69,3 @@ function closestTo(dirtyDateToCompare, dirtyDatesArray) {
   });
   return result;
 }
-
-module.exports = exports.default;

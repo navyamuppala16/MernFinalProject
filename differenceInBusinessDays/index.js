@@ -1,28 +1,11 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInBusinessDays;
-
-var _index = _interopRequireDefault(require("../isValid/index.js"));
-
-var _index2 = _interopRequireDefault(require("../isWeekend/index.js"));
-
-var _index3 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index4 = _interopRequireDefault(require("../differenceInCalendarDays/index.js"));
-
-var _index5 = _interopRequireDefault(require("../addDays/index.js"));
-
-var _index6 = _interopRequireDefault(require("../isSameDay/index.js"));
-
-var _index7 = _interopRequireDefault(require("../_lib/toInteger/index.js"));
-
-var _index8 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import isValid from '../isValid/index.js';
+import isWeekend from '../isWeekend/index.js';
+import toDate from '../toDate/index.js';
+import differenceInCalendarDays from '../differenceInCalendarDays/index.js';
+import addDays from '../addDays/index.js';
+import isSameDay from '../isSameDay/index.js';
+import toInteger from '../_lib/toInteger/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name differenceInBusinessDays
  * @category Day Helpers
@@ -48,24 +31,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> 136
  */
-function differenceInBusinessDays(dirtyDateLeft, dirtyDateRight) {
-  (0, _index8.default)(2, arguments);
-  var dateLeft = (0, _index3.default)(dirtyDateLeft);
-  var dateRight = (0, _index3.default)(dirtyDateRight);
-  if (!(0, _index.default)(dateLeft) || !(0, _index.default)(dateRight)) return new Date(NaN);
-  var calendarDifference = (0, _index4.default)(dateLeft, dateRight);
-  var sign = calendarDifference < 0 ? -1 : 1;
-  var weeks = (0, _index7.default)(calendarDifference / 7);
-  var result = weeks * 5;
-  dateRight = (0, _index5.default)(dateRight, weeks * 7); // the loop below will run at most 6 times to account for the remaining days that don't makeup a full week
 
-  while (!(0, _index6.default)(dateLeft, dateRight)) {
+export default function differenceInBusinessDays(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
+  if (!isValid(dateLeft) || !isValid(dateRight)) return new Date(NaN);
+  var calendarDifference = differenceInCalendarDays(dateLeft, dateRight);
+  var sign = calendarDifference < 0 ? -1 : 1;
+  var weeks = toInteger(calendarDifference / 7);
+  var result = weeks * 5;
+  dateRight = addDays(dateRight, weeks * 7); // the loop below will run at most 6 times to account for the remaining days that don't makeup a full week
+
+  while (!isSameDay(dateLeft, dateRight)) {
     // sign is used to account for both negative and positive differences
-    result += (0, _index2.default)(dateRight) ? 0 : sign;
-    dateRight = (0, _index5.default)(dateRight, sign);
+    result += isWeekend(dateRight) ? 0 : sign;
+    dateRight = addDays(dateRight, sign);
   }
 
   return result === 0 ? 0 : result;
 }
-
-module.exports = exports.default;

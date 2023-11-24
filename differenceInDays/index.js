@@ -1,22 +1,10 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInDays;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../differenceInCalendarDays/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Like `compareAsc` but uses local time not UTC, which is needed
+import toDate from '../toDate/index.js';
+import differenceInCalendarDays from '../differenceInCalendarDays/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js'; // Like `compareAsc` but uses local time not UTC, which is needed
 // for accurate equality comparisons of UTC timestamps that end up
 // having the same representation in local time, e.g. one hour before
 // DST ends vs. the instant that DST ends.
+
 function compareLocalAsc(dateLeft, dateRight) {
   var diff = dateLeft.getFullYear() - dateRight.getFullYear() || dateLeft.getMonth() - dateRight.getMonth() || dateLeft.getDate() - dateRight.getDate() || dateLeft.getHours() - dateRight.getHours() || dateLeft.getMinutes() - dateRight.getMinutes() || dateLeft.getSeconds() - dateRight.getSeconds() || dateLeft.getMilliseconds() - dateRight.getMilliseconds();
 
@@ -83,12 +71,12 @@ function compareLocalAsc(dateLeft, dateRight) {
  */
 
 
-function differenceInDays(dirtyDateLeft, dirtyDateRight) {
-  (0, _index3.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
+export default function differenceInDays(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
   var sign = compareLocalAsc(dateLeft, dateRight);
-  var difference = Math.abs((0, _index2.default)(dateLeft, dateRight));
+  var difference = Math.abs(differenceInCalendarDays(dateLeft, dateRight));
   dateLeft.setDate(dateLeft.getDate() - sign * difference); // Math.abs(diff in full days - diff in calendar days) === 1 if last calendar day is not full
   // If so, result must be decreased by 1 in absolute value
 
@@ -97,5 +85,3 @@ function differenceInDays(dirtyDateLeft, dirtyDateRight) {
 
   return result === 0 ? 0 : result;
 }
-
-module.exports = exports.default;

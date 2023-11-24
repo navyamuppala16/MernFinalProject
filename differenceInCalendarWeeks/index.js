@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInCalendarWeeks;
-
-var _index = _interopRequireDefault(require("../startOfWeek/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/getTimezoneOffsetInMilliseconds/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import startOfWeek from '../startOfWeek/index.js';
+import getTimezoneOffsetInMilliseconds from '../_lib/getTimezoneOffsetInMilliseconds/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 var MILLISECONDS_IN_WEEK = 604800000;
 /**
  * @name differenceInCalendarWeeks
@@ -54,16 +42,14 @@ var MILLISECONDS_IN_WEEK = 604800000;
  * //=> 2
  */
 
-function differenceInCalendarWeeks(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
-  (0, _index3.default)(2, arguments);
-  var startOfWeekLeft = (0, _index.default)(dirtyDateLeft, dirtyOptions);
-  var startOfWeekRight = (0, _index.default)(dirtyDateRight, dirtyOptions);
-  var timestampLeft = startOfWeekLeft.getTime() - (0, _index2.default)(startOfWeekLeft);
-  var timestampRight = startOfWeekRight.getTime() - (0, _index2.default)(startOfWeekRight); // Round the number of days to the nearest integer
+export default function differenceInCalendarWeeks(dirtyDateLeft, dirtyDateRight, dirtyOptions) {
+  requiredArgs(2, arguments);
+  var startOfWeekLeft = startOfWeek(dirtyDateLeft, dirtyOptions);
+  var startOfWeekRight = startOfWeek(dirtyDateRight, dirtyOptions);
+  var timestampLeft = startOfWeekLeft.getTime() - getTimezoneOffsetInMilliseconds(startOfWeekLeft);
+  var timestampRight = startOfWeekRight.getTime() - getTimezoneOffsetInMilliseconds(startOfWeekRight); // Round the number of days to the nearest integer
   // because the number of milliseconds in a week is not constant
   // (e.g. it's different in the week of the daylight saving time clock shift)
 
   return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_WEEK);
 }
-
-module.exports = exports.default;

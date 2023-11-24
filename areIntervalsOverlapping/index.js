@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = areIntervalsOverlapping;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name areIntervalsOverlapping
  * @category Interval Helpers
@@ -100,15 +89,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> true
  */
-function areIntervalsOverlapping(dirtyIntervalLeft, dirtyIntervalRight) {
+
+export default function areIntervalsOverlapping(dirtyIntervalLeft, dirtyIntervalRight) {
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  (0, _index2.default)(2, arguments);
+  requiredArgs(2, arguments);
   var intervalLeft = dirtyIntervalLeft || {};
   var intervalRight = dirtyIntervalRight || {};
-  var leftStartTime = (0, _index.default)(intervalLeft.start).getTime();
-  var leftEndTime = (0, _index.default)(intervalLeft.end).getTime();
-  var rightStartTime = (0, _index.default)(intervalRight.start).getTime();
-  var rightEndTime = (0, _index.default)(intervalRight.end).getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
+  var leftStartTime = toDate(intervalLeft.start).getTime();
+  var leftEndTime = toDate(intervalLeft.end).getTime();
+  var rightStartTime = toDate(intervalRight.start).getTime();
+  var rightEndTime = toDate(intervalRight.end).getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
 
   if (!(leftStartTime <= leftEndTime && rightStartTime <= rightEndTime)) {
     throw new RangeError('Invalid interval');
@@ -120,5 +110,3 @@ function areIntervalsOverlapping(dirtyIntervalLeft, dirtyIntervalRight) {
 
   return leftStartTime < rightEndTime && rightStartTime < leftEndTime;
 }
-
-module.exports = exports.default;

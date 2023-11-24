@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addYears;
-
-var _index = _interopRequireDefault(require("../_lib/toInteger/index.js"));
-
-var _index2 = _interopRequireDefault(require("../addMonths/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toInteger from '../_lib/toInteger/index.js';
+import addMonths from '../addMonths/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name addYears
  * @category Year Helpers
@@ -35,10 +23,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * var result = addYears(new Date(2014, 8, 1), 5)
  * //=> Sun Sep 01 2019 00:00:00
  */
-function addYears(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, amount * 12);
-}
 
-module.exports = exports.default;
+export default function addYears(dirtyDate, dirtyAmount) {
+  requiredArgs(2, arguments);
+  var amount = toInteger(dirtyAmount);
+  return addMonths(dirtyDate, amount * 12);
+}

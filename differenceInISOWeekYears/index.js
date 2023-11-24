@@ -1,22 +1,8 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInISOWeekYears;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../differenceInCalendarISOWeekYears/index.js"));
-
-var _index3 = _interopRequireDefault(require("../compareAsc/index.js"));
-
-var _index4 = _interopRequireDefault(require("../subISOWeekYears/index.js"));
-
-var _index5 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toDate from '../toDate/index.js';
+import differenceInCalendarISOWeekYears from '../differenceInCalendarISOWeekYears/index.js';
+import compareAsc from '../compareAsc/index.js';
+import subISOWeekYears from '../subISOWeekYears/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name differenceInISOWeekYears
  * @category ISO Week-Numbering Year Helpers
@@ -49,20 +35,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> 1
  */
-function differenceInISOWeekYears(dirtyDateLeft, dirtyDateRight) {
-  (0, _index5.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  var sign = (0, _index3.default)(dateLeft, dateRight);
-  var difference = Math.abs((0, _index2.default)(dateLeft, dateRight));
-  dateLeft = (0, _index4.default)(dateLeft, sign * difference); // Math.abs(diff in full ISO years - diff in calendar ISO years) === 1
+
+export default function differenceInISOWeekYears(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
+  var sign = compareAsc(dateLeft, dateRight);
+  var difference = Math.abs(differenceInCalendarISOWeekYears(dateLeft, dateRight));
+  dateLeft = subISOWeekYears(dateLeft, sign * difference); // Math.abs(diff in full ISO years - diff in calendar ISO years) === 1
   // if last calendar ISO year is not full
   // If so, result must be decreased by 1 in absolute value
 
-  var isLastISOWeekYearNotFull = (0, _index3.default)(dateLeft, dateRight) === -sign;
+  var isLastISOWeekYearNotFull = compareAsc(dateLeft, dateRight) === -sign;
   var result = sign * (difference - isLastISOWeekYearNotFull); // Prevent negative zero
 
   return result === 0 ? 0 : result;
 }
-
-module.exports = exports.default;

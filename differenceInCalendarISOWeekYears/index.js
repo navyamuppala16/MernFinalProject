@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInCalendarISOWeekYears;
-
-var _index = _interopRequireDefault(require("../getISOWeekYear/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import getISOWeekYear from '../getISOWeekYear/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name differenceInCalendarISOWeekYears
  * @category ISO Week-Numbering Year Helpers
@@ -43,9 +32,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> 2
  */
-function differenceInCalendarISOWeekYears(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  return (0, _index.default)(dirtyDateLeft) - (0, _index.default)(dirtyDateRight);
-}
 
-module.exports = exports.default;
+export default function differenceInCalendarISOWeekYears(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  return getISOWeekYear(dirtyDateLeft) - getISOWeekYear(dirtyDateRight);
+}

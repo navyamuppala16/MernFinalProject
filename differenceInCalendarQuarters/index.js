@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInCalendarQuarters;
-
-var _index = _interopRequireDefault(require("../getQuarter/index.js"));
-
-var _index2 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import getQuarter from '../getQuarter/index.js';
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name differenceInCalendarQuarters
  * @category Quarter Helpers
@@ -38,13 +26,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> 3
  */
-function differenceInCalendarQuarters(dirtyDateLeft, dirtyDateRight) {
-  (0, _index3.default)(2, arguments);
-  var dateLeft = (0, _index2.default)(dirtyDateLeft);
-  var dateRight = (0, _index2.default)(dirtyDateRight);
+
+export default function differenceInCalendarQuarters(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var dateLeft = toDate(dirtyDateLeft);
+  var dateRight = toDate(dirtyDateRight);
   var yearDiff = dateLeft.getFullYear() - dateRight.getFullYear();
-  var quarterDiff = (0, _index.default)(dateLeft) - (0, _index.default)(dateRight);
+  var quarterDiff = getQuarter(dateLeft) - getQuarter(dateRight);
   return yearDiff * 4 + quarterDiff;
 }
-
-module.exports = exports.default;

@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addWeeks;
-
-var _index = _interopRequireDefault(require("../_lib/toInteger/index.js"));
-
-var _index2 = _interopRequireDefault(require("../addDays/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toInteger from '../_lib/toInteger/index.js';
+import addDays from '../addDays/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name addWeeks
  * @category Week Helpers
@@ -35,11 +23,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * var result = addWeeks(new Date(2014, 8, 1), 4)
  * //=> Mon Sep 29 2014 00:00:00
  */
-function addWeeks(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  var days = amount * 7;
-  return (0, _index2.default)(dirtyDate, days);
-}
 
-module.exports = exports.default;
+export default function addWeeks(dirtyDate, dirtyAmount) {
+  requiredArgs(2, arguments);
+  var amount = toInteger(dirtyAmount);
+  var days = amount * 7;
+  return addDays(dirtyDate, days);
+}
