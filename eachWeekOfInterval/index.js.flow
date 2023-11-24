@@ -47,10 +47,6 @@ export type Duration = {
   seconds?: number,
 }
 
-declare module.exports: (
-  interval: Interval,
-  options?: {
-    locale?: Locale,
-    weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6,
-  }
-) => Date[]
+type CurriedFn1<A, R> = <A>(a: A) => R
+
+declare module.exports: CurriedFn1<Interval, Date[]>
