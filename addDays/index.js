@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addDays;
-
-var _index = _interopRequireDefault(require("../_lib/toInteger/index.js"));
-
-var _index2 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toInteger from '../_lib/toInteger/index.js';
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name addDays
  * @category Day Helpers
@@ -35,10 +23,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * var result = addDays(new Date(2014, 8, 1), 10)
  * //=> Thu Sep 11 2014 00:00:00
  */
-function addDays(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var amount = (0, _index.default)(dirtyAmount);
+
+export default function addDays(dirtyDate, dirtyAmount) {
+  requiredArgs(2, arguments);
+  var date = toDate(dirtyDate);
+  var amount = toInteger(dirtyAmount);
 
   if (isNaN(amount)) {
     return new Date(NaN);
@@ -52,5 +41,3 @@ function addDays(dirtyDate, dirtyAmount) {
   date.setDate(date.getDate() + amount);
   return date;
 }
-
-module.exports = exports.default;

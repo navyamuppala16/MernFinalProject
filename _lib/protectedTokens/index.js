@@ -1,23 +1,12 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.isProtectedDayOfYearToken = isProtectedDayOfYearToken;
-exports.isProtectedWeekYearToken = isProtectedWeekYearToken;
-exports.throwProtectedError = throwProtectedError;
 var protectedDayOfYearTokens = ['D', 'DD'];
 var protectedWeekYearTokens = ['YY', 'YYYY'];
-
-function isProtectedDayOfYearToken(token) {
+export function isProtectedDayOfYearToken(token) {
   return protectedDayOfYearTokens.indexOf(token) !== -1;
 }
-
-function isProtectedWeekYearToken(token) {
+export function isProtectedWeekYearToken(token) {
   return protectedWeekYearTokens.indexOf(token) !== -1;
 }
-
-function throwProtectedError(token, format, input) {
+export function throwProtectedError(token, format, input) {
   if (token === 'YYYY') {
     throw new RangeError("Use `yyyy` instead of `YYYY` (in `".concat(format, "`) for formatting years to the input `").concat(input, "`; see: https://git.io/fxCyr"));
   } else if (token === 'YY') {

@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addHours;
-
-var _index = _interopRequireDefault(require("../_lib/toInteger/index.js"));
-
-var _index2 = _interopRequireDefault(require("../addMilliseconds/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toInteger from '../_lib/toInteger/index.js';
+import addMilliseconds from '../addMilliseconds/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 var MILLISECONDS_IN_HOUR = 3600000;
 /**
  * @name addHours
@@ -37,10 +25,8 @@ var MILLISECONDS_IN_HOUR = 3600000;
  * //=> Fri Jul 11 2014 01:00:00
  */
 
-function addHours(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, amount * MILLISECONDS_IN_HOUR);
+export default function addHours(dirtyDate, dirtyAmount) {
+  requiredArgs(2, arguments);
+  var amount = toInteger(dirtyAmount);
+  return addMilliseconds(dirtyDate, amount * MILLISECONDS_IN_HOUR);
 }
-
-module.exports = exports.default;

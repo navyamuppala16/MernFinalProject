@@ -1,24 +1,9 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addBusinessDays;
-
-var _index = _interopRequireDefault(require("../isWeekend/index.js"));
-
-var _index2 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/toInteger/index.js"));
-
-var _index4 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-var _index5 = _interopRequireDefault(require("../isSunday/index.js"));
-
-var _index6 = _interopRequireDefault(require("../isSaturday/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import isWeekend from '../isWeekend/index.js';
+import toDate from '../toDate/index.js';
+import toInteger from '../_lib/toInteger/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
+import isSunday from '../isSunday/index.js';
+import isSaturday from '../isSaturday/index.js';
 /**
  * @name addBusinessDays
  * @category Day Helpers
@@ -37,37 +22,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * var result = addBusinessDays(new Date(2014, 8, 1), 10)
  * //=> Mon Sep 15 2014 00:00:00 (skipped weekend days)
  */
-function addBusinessDays(dirtyDate, dirtyAmount) {
-  (0, _index4.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var startedOnWeekend = (0, _index.default)(date);
-  var amount = (0, _index3.default)(dirtyAmount);
+
+export default function addBusinessDays(dirtyDate, dirtyAmount) {
+  requiredArgs(2, arguments);
+  var date = toDate(dirtyDate);
+  var startedOnWeekend = isWeekend(date);
+  var amount = toInteger(dirtyAmount);
   if (isNaN(amount)) return new Date(NaN);
   var hours = date.getHours();
   var sign = amount < 0 ? -1 : 1;
-  var fullWeeks = (0, _index3.default)(amount / 5);
+  var fullWeeks = toInteger(amount / 5);
   date.setDate(date.getDate() + fullWeeks * 7); // Get remaining days not part of a full week
 
   var restDays = Math.abs(amount % 5); // Loops over remaining days
 
   while (restDays > 0) {
     date.setDate(date.getDate() + sign);
-    if (!(0, _index.default)(date)) restDays -= 1;
+    if (!isWeekend(date)) restDays -= 1;
   } // If the date is a weekend day and we reduce a dividable of
   // 5 from it, we land on a weekend date.
   // To counter this, we add days accordingly to land on the next business day
 
 
-  if (startedOnWeekend && (0, _index.default)(date) && amount !== 0) {
+  if (startedOnWeekend && isWeekend(date) && amount !== 0) {
     // If we're reducing days, we want to add days until we land on a weekday
     // If we're adding days we want to reduce days until we land on a weekday
-    if ((0, _index6.default)(date)) date.setDate(date.getDate() + (sign < 0 ? 2 : -1));
-    if ((0, _index5.default)(date)) date.setDate(date.getDate() + (sign < 0 ? 1 : -2));
+    if (isSaturday(date)) date.setDate(date.getDate() + (sign < 0 ? 2 : -1));
+    if (isSunday(date)) date.setDate(date.getDate() + (sign < 0 ? 1 : -2));
   } // Restore hours to avoid DST lag
 
 
   date.setHours(hours);
   return date;
 }
-
-module.exports = exports.default;

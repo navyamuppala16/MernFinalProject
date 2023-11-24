@@ -1,23 +1,10 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = isSameUTCWeek;
-
-var _index = _interopRequireDefault(require("../startOfUTCWeek/index.js"));
-
-var _index2 = _interopRequireDefault(require("../requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// This function will be a part of public API when UTC function will be implemented.
+import startOfUTCWeek from '../startOfUTCWeek/index.js';
+import requiredArgs from '../requiredArgs/index.js'; // This function will be a part of public API when UTC function will be implemented.
 // See issue: https://github.com/date-fns/date-fns/issues/376
-function isSameUTCWeek(dirtyDateLeft, dirtyDateRight, options) {
-  (0, _index2.default)(2, arguments);
-  var dateLeftStartOfWeek = (0, _index.default)(dirtyDateLeft, options);
-  var dateRightStartOfWeek = (0, _index.default)(dirtyDateRight, options);
+
+export default function isSameUTCWeek(dirtyDateLeft, dirtyDateRight, options) {
+  requiredArgs(2, arguments);
+  var dateLeftStartOfWeek = startOfUTCWeek(dirtyDateLeft, options);
+  var dateRightStartOfWeek = startOfUTCWeek(dirtyDateRight, options);
   return dateLeftStartOfWeek.getTime() === dateRightStartOfWeek.getTime();
 }
-
-module.exports = exports.default;

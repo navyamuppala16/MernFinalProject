@@ -1,10 +1,3 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
 function dateLongFormatter(pattern, formatLong) {
   switch (pattern) {
     case 'P':
@@ -100,6 +93,4 @@ var longFormatters = {
   p: timeLongFormatter,
   P: dateTimeLongFormatter
 };
-var _default = longFormatters;
-exports.default = _default;
-module.exports = exports.default;
+export default longFormatters;

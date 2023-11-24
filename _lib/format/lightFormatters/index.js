@@ -1,14 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _index = _interopRequireDefault(require("../../addLeadingZeros/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import addLeadingZeros from '../../addLeadingZeros/index.js';
 /*
  * |     | Unit                           |     | Unit                           |
  * |-----|--------------------------------|-----|--------------------------------|
@@ -21,6 +11,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  * Letters marked by * are not implemented but reserved by Unicode standard.
  */
+
 var formatters = {
   // Year
   y: function (date, token) {
@@ -35,16 +26,16 @@ var formatters = {
     var signedYear = date.getUTCFullYear(); // Returns 1 for 1 BC (which is year 0 in JavaScript)
 
     var year = signedYear > 0 ? signedYear : 1 - signedYear;
-    return (0, _index.default)(token === 'yy' ? year % 100 : year, token.length);
+    return addLeadingZeros(token === 'yy' ? year % 100 : year, token.length);
   },
   // Month
   M: function (date, token) {
     var month = date.getUTCMonth();
-    return token === 'M' ? String(month + 1) : (0, _index.default)(month + 1, 2);
+    return token === 'M' ? String(month + 1) : addLeadingZeros(month + 1, 2);
   },
   // Day of the month
   d: function (date, token) {
-    return (0, _index.default)(date.getUTCDate(), token.length);
+    return addLeadingZeros(date.getUTCDate(), token.length);
   },
   // AM or PM
   a: function (date, token) {
@@ -66,28 +57,26 @@ var formatters = {
   },
   // Hour [1-12]
   h: function (date, token) {
-    return (0, _index.default)(date.getUTCHours() % 12 || 12, token.length);
+    return addLeadingZeros(date.getUTCHours() % 12 || 12, token.length);
   },
   // Hour [0-23]
   H: function (date, token) {
-    return (0, _index.default)(date.getUTCHours(), token.length);
+    return addLeadingZeros(date.getUTCHours(), token.length);
   },
   // Minute
   m: function (date, token) {
-    return (0, _index.default)(date.getUTCMinutes(), token.length);
+    return addLeadingZeros(date.getUTCMinutes(), token.length);
   },
   // Second
   s: function (date, token) {
-    return (0, _index.default)(date.getUTCSeconds(), token.length);
+    return addLeadingZeros(date.getUTCSeconds(), token.length);
   },
   // Fraction of second
   S: function (date, token) {
     var numberOfDigits = token.length;
     var milliseconds = date.getUTCMilliseconds();
     var fractionalSeconds = Math.floor(milliseconds * Math.pow(10, numberOfDigits - 3));
-    return (0, _index.default)(fractionalSeconds, token.length);
+    return addLeadingZeros(fractionalSeconds, token.length);
   }
 };
-var _default = formatters;
-exports.default = _default;
-module.exports = exports.default;
+export default formatters;

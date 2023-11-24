@@ -1,9 +1,3 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = getTimezoneOffsetInMilliseconds;
 var MILLISECONDS_IN_MINUTE = 60000;
 
 function getDateMillisecondsPart(date) {
@@ -22,7 +16,7 @@ function getDateMillisecondsPart(date) {
  */
 
 
-function getTimezoneOffsetInMilliseconds(dirtyDate) {
+export default function getTimezoneOffsetInMilliseconds(dirtyDate) {
   var date = new Date(dirtyDate.getTime());
   var baseTimezoneOffset = Math.ceil(date.getTimezoneOffset());
   date.setSeconds(0, 0);
@@ -30,5 +24,3 @@ function getTimezoneOffsetInMilliseconds(dirtyDate) {
   var millisecondsPartOfTimezoneOffset = hasNegativeUTCOffset ? (MILLISECONDS_IN_MINUTE + getDateMillisecondsPart(date)) % MILLISECONDS_IN_MINUTE : getDateMillisecondsPart(date);
   return baseTimezoneOffset * MILLISECONDS_IN_MINUTE + millisecondsPartOfTimezoneOffset;
 }
-
-module.exports = exports.default;

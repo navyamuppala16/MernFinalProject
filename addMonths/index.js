@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addMonths;
-
-var _index = _interopRequireDefault(require("../_lib/toInteger/index.js"));
-
-var _index2 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toInteger from '../_lib/toInteger/index.js';
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name addMonths
  * @category Month Helpers
@@ -35,10 +23,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * var result = addMonths(new Date(2014, 8, 1), 5)
  * //=> Sun Feb 01 2015 00:00:00
  */
-function addMonths(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var amount = (0, _index.default)(dirtyAmount);
+
+export default function addMonths(dirtyDate, dirtyAmount) {
+  requiredArgs(2, arguments);
+  var date = toDate(dirtyDate);
+  var amount = toInteger(dirtyAmount);
 
   if (isNaN(amount)) {
     return new Date(NaN);
@@ -78,5 +67,3 @@ function addMonths(dirtyDate, dirtyAmount) {
     return date;
   }
 }
-
-module.exports = exports.default;

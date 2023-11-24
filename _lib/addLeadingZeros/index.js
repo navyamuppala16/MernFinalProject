@@ -1,11 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addLeadingZeros;
-
-function addLeadingZeros(number, targetLength) {
+export default function addLeadingZeros(number, targetLength) {
   var sign = number < 0 ? '-' : '';
   var output = Math.abs(number).toString();
 
@@ -15,5 +8,3 @@ function addLeadingZeros(number, targetLength) {
 
   return sign + output;
 }
-
-module.exports = exports.default;

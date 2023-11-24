@@ -1,22 +1,8 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = add;
-
-var _index = _interopRequireDefault(require("../addDays/index.js"));
-
-var _index2 = _interopRequireDefault(require("../addMonths/index.js"));
-
-var _index3 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index4 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-var _index5 = _interopRequireDefault(require("../_lib/toInteger/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import addDays from '../addDays/index.js';
+import addMonths from '../addMonths/index.js';
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
+import toInteger from '../_lib/toInteger/index.js';
 /**
  * @name add
  * @category Common Helpers
@@ -56,21 +42,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * })
  * //=> Thu Jun 15 2017 15:29:20
  */
-function add(dirtyDate, duration) {
-  (0, _index4.default)(2, arguments);
+
+export default function add(dirtyDate, duration) {
+  requiredArgs(2, arguments);
   if (!duration || typeof duration !== 'object') return new Date(NaN);
-  var years = 'years' in duration ? (0, _index5.default)(duration.years) : 0;
-  var months = 'months' in duration ? (0, _index5.default)(duration.months) : 0;
-  var weeks = 'weeks' in duration ? (0, _index5.default)(duration.weeks) : 0;
-  var days = 'days' in duration ? (0, _index5.default)(duration.days) : 0;
-  var hours = 'hours' in duration ? (0, _index5.default)(duration.hours) : 0;
-  var minutes = 'minutes' in duration ? (0, _index5.default)(duration.minutes) : 0;
-  var seconds = 'seconds' in duration ? (0, _index5.default)(duration.seconds) : 0; // Add years and months
+  var years = 'years' in duration ? toInteger(duration.years) : 0;
+  var months = 'months' in duration ? toInteger(duration.months) : 0;
+  var weeks = 'weeks' in duration ? toInteger(duration.weeks) : 0;
+  var days = 'days' in duration ? toInteger(duration.days) : 0;
+  var hours = 'hours' in duration ? toInteger(duration.hours) : 0;
+  var minutes = 'minutes' in duration ? toInteger(duration.minutes) : 0;
+  var seconds = 'seconds' in duration ? toInteger(duration.seconds) : 0; // Add years and months
 
-  var date = (0, _index3.default)(dirtyDate);
-  var dateWithMonths = months || years ? (0, _index2.default)(date, months + years * 12) : date; // Add weeks and days
+  var date = toDate(dirtyDate);
+  var dateWithMonths = months || years ? addMonths(date, months + years * 12) : date; // Add weeks and days
 
-  var dateWithDays = days || weeks ? (0, _index.default)(dateWithMonths, days + weeks * 7) : dateWithMonths; // Add days, hours, minutes and seconds
+  var dateWithDays = days || weeks ? addDays(dateWithMonths, days + weeks * 7) : dateWithMonths; // Add days, hours, minutes and seconds
 
   var minutesToAdd = minutes + hours * 60;
   var secondsToAdd = seconds + minutesToAdd * 60;
@@ -78,5 +65,3 @@ function add(dirtyDate, duration) {
   var finalDate = new Date(dateWithDays.getTime() + msToAdd);
   return finalDate;
 }
-
-module.exports = exports.default;
