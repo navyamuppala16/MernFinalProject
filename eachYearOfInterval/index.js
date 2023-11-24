@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = eachYearOfInterval;
-
-var _index = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name eachYearOfInterval
  * @category Interval Helpers
@@ -38,11 +27,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * //   Sun Jan 01 2017 00:00:00
  * // ]
  */
-function eachYearOfInterval(dirtyInterval) {
-  (0, _index2.default)(1, arguments);
+
+export default function eachYearOfInterval(dirtyInterval) {
+  requiredArgs(1, arguments);
   var interval = dirtyInterval || {};
-  var startDate = (0, _index.default)(interval.start);
-  var endDate = (0, _index.default)(interval.end);
+  var startDate = toDate(interval.start);
+  var endDate = toDate(interval.end);
   var endTime = endDate.getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
 
   if (!(startDate.getTime() <= endTime)) {
@@ -55,11 +45,9 @@ function eachYearOfInterval(dirtyInterval) {
   currentDate.setMonth(0, 1);
 
   while (currentDate.getTime() <= endTime) {
-    dates.push((0, _index.default)(currentDate));
+    dates.push(toDate(currentDate));
     currentDate.setFullYear(currentDate.getFullYear() + 1);
   }
 
   return dates;
 }
-
-module.exports = exports.default;

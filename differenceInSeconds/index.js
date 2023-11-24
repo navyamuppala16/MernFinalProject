@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInSeconds;
-
-var _index = _interopRequireDefault(require("../differenceInMilliseconds/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import differenceInMilliseconds from '../differenceInMilliseconds/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name differenceInSeconds
  * @category Second Helpers
@@ -37,10 +26,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> 12
  */
-function differenceInSeconds(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var diff = (0, _index.default)(dirtyDateLeft, dirtyDateRight) / 1000;
+
+export default function differenceInSeconds(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var diff = differenceInMilliseconds(dirtyDateLeft, dirtyDateRight) / 1000;
   return diff > 0 ? Math.floor(diff) : Math.ceil(diff);
 }
-
-module.exports = exports.default;

@@ -1,20 +1,7 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = eachQuarterOfInterval;
-
-var _index = _interopRequireDefault(require("../addQuarters/index.js"));
-
-var _index2 = _interopRequireDefault(require("../startOfQuarter/index.js"));
-
-var _index3 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index4 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import addQuarters from '../addQuarters/index.js';
+import startOfQuarter from '../startOfQuarter/index.js';
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name eachQuarterOfInterval
  * @category Interval Helpers
@@ -41,29 +28,28 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * //   Tue Jul 01 2014 00:00:00,
  * // ]
  */
-function eachQuarterOfInterval(dirtyInterval) {
-  (0, _index4.default)(1, arguments);
+
+export default function eachQuarterOfInterval(dirtyInterval) {
+  requiredArgs(1, arguments);
   var interval = dirtyInterval || {};
-  var startDate = (0, _index3.default)(interval.start);
-  var endDate = (0, _index3.default)(interval.end);
+  var startDate = toDate(interval.start);
+  var endDate = toDate(interval.end);
   var endTime = endDate.getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
 
   if (!(startDate.getTime() <= endTime)) {
     throw new RangeError('Invalid interval');
   }
 
-  var startDateQuarter = (0, _index2.default)(startDate);
-  var endDateQuarter = (0, _index2.default)(endDate);
+  var startDateQuarter = startOfQuarter(startDate);
+  var endDateQuarter = startOfQuarter(endDate);
   endTime = endDateQuarter.getTime();
   var quarters = [];
   var currentQuarter = startDateQuarter;
 
   while (currentQuarter.getTime() <= endTime) {
-    quarters.push((0, _index3.default)(currentQuarter));
-    currentQuarter = (0, _index.default)(currentQuarter, 1);
+    quarters.push(toDate(currentQuarter));
+    currentQuarter = addQuarters(currentQuarter, 1);
   }
 
   return quarters;
 }
-
-module.exports = exports.default;

@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInQuarters;
-
-var _index = _interopRequireDefault(require("../differenceInMonths/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import differenceInMonths from '../differenceInMonths/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name differenceInQuarters
  * @category Quarter Helpers
@@ -33,10 +22,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * var result = differenceInQuarters(new Date(2014, 6, 2), new Date(2013, 11, 31))
  * //=> 2
  */
-function differenceInQuarters(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var diff = (0, _index.default)(dirtyDateLeft, dirtyDateRight) / 3;
+
+export default function differenceInQuarters(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var diff = differenceInMonths(dirtyDateLeft, dirtyDateRight) / 3;
   return diff > 0 ? Math.floor(diff) : Math.ceil(diff);
 }
-
-module.exports = exports.default;

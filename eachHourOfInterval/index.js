@@ -1,18 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = eachHourOfInterval;
-
-var _index = _interopRequireDefault(require("../addHours/index.js"));
-
-var _index2 = _interopRequireDefault(require("../toDate/index.js"));
-
-var _index3 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import addHours from '../addHours/index.js';
+import toDate from '../toDate/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name eachHourOfInterval
  * @category Interval Helpers
@@ -43,11 +31,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * //   Mon Oct 06 2014 15:00:00
  * // ]
  */
-function eachHourOfInterval(dirtyInterval, options) {
-  (0, _index3.default)(1, arguments);
+
+export default function eachHourOfInterval(dirtyInterval, options) {
+  requiredArgs(1, arguments);
   var interval = dirtyInterval || {};
-  var startDate = (0, _index2.default)(interval.start);
-  var endDate = (0, _index2.default)(interval.end);
+  var startDate = toDate(interval.start);
+  var endDate = toDate(interval.end);
   var startTime = startDate.getTime();
   var endTime = endDate.getTime(); // Throw an exception if start date is after end date or if any date is `Invalid Date`
 
@@ -62,11 +51,9 @@ function eachHourOfInterval(dirtyInterval, options) {
   if (step < 1 || isNaN(step)) throw new RangeError('`options.step` must be a number greater than 1');
 
   while (currentDate.getTime() <= endTime) {
-    dates.push((0, _index2.default)(currentDate));
-    currentDate = (0, _index.default)(currentDate, step);
+    dates.push(toDate(currentDate));
+    currentDate = addHours(currentDate, step);
   }
 
   return dates;
 }
-
-module.exports = exports.default;

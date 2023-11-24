@@ -1,20 +1,7 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = eachWeekendOfInterval;
-
-var _index = _interopRequireDefault(require("../eachDayOfInterval/index.js"));
-
-var _index2 = _interopRequireDefault(require("../isSunday/index.js"));
-
-var _index3 = _interopRequireDefault(require("../isWeekend/index.js"));
-
-var _index4 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import eachDayOfInterval from '../eachDayOfInterval/index.js';
+import isSunday from '../isSunday/index.js';
+import isWeekend from '../isWeekend/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name eachWeekendOfInterval
  * @category Interval Helpers
@@ -42,22 +29,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * //   Sun Sep 30 2018 00:00:00
  * // ]
  */
-function eachWeekendOfInterval(interval) {
-  (0, _index4.default)(1, arguments);
-  var dateInterval = (0, _index.default)(interval);
+
+export default function eachWeekendOfInterval(interval) {
+  requiredArgs(1, arguments);
+  var dateInterval = eachDayOfInterval(interval);
   var weekends = [];
   var index = 0;
 
   while (index < dateInterval.length) {
     var date = dateInterval[index++];
 
-    if ((0, _index3.default)(date)) {
+    if (isWeekend(date)) {
       weekends.push(date);
-      if ((0, _index2.default)(date)) index = index + 5;
+      if (isSunday(date)) index = index + 5;
     }
   }
 
   return weekends;
 }
-
-module.exports = exports.default;

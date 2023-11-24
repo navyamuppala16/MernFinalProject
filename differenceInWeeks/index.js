@@ -1,16 +1,5 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = differenceInWeeks;
-
-var _index = _interopRequireDefault(require("../differenceInDays/index.js"));
-
-var _index2 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import differenceInDays from '../differenceInDays/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name differenceInWeeks
  * @category Week Helpers
@@ -54,10 +43,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * )
  * //=> 8
  */
-function differenceInWeeks(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var diff = (0, _index.default)(dirtyDateLeft, dirtyDateRight) / 7;
+
+export default function differenceInWeeks(dirtyDateLeft, dirtyDateRight) {
+  requiredArgs(2, arguments);
+  var diff = differenceInDays(dirtyDateLeft, dirtyDateRight) / 7;
   return diff > 0 ? Math.floor(diff) : Math.ceil(diff);
 }
-
-module.exports = exports.default;

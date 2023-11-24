@@ -1,20 +1,7 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = eachWeekendOfYear;
-
-var _index = _interopRequireDefault(require("../eachWeekendOfInterval/index.js"));
-
-var _index2 = _interopRequireDefault(require("../startOfYear/index.js"));
-
-var _index3 = _interopRequireDefault(require("../endOfYear/index.js"));
-
-var _index4 = _interopRequireDefault(require("../_lib/requiredArgs/index.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+import eachWeekendOfInterval from '../eachWeekendOfInterval/index.js';
+import startOfYear from '../startOfYear/index.js';
+import endOfYear from '../endOfYear/index.js';
+import requiredArgs from '../_lib/requiredArgs/index.js';
 /**
  * @name eachWeekendOfYear
  * @category Year Helpers
@@ -39,15 +26,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * // ]
  * ]
  */
-function eachWeekendOfYear(dirtyDate) {
-  (0, _index4.default)(1, arguments);
-  var startDate = (0, _index2.default)(dirtyDate);
+
+export default function eachWeekendOfYear(dirtyDate) {
+  requiredArgs(1, arguments);
+  var startDate = startOfYear(dirtyDate);
   if (isNaN(startDate)) throw new RangeError('The passed date is invalid');
-  var endDate = (0, _index3.default)(dirtyDate);
-  return (0, _index.default)({
+  var endDate = endOfYear(dirtyDate);
+  return eachWeekendOfInterval({
     start: startDate,
     end: endDate
   });
 }
-
-module.exports = exports.default;
